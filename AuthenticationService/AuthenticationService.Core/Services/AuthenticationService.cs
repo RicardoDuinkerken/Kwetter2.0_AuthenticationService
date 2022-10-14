@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using AuthenticationService.Core.Exceptions;
+using AuthenticationService.Core.Services.interfaces;
 using AuthenticationService.Dal.Models;
 using GenericDal;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +12,7 @@ using BC = BCrypt.Net.BCrypt;
 
 namespace AuthenticationService.Core.Services;
 
-public class AuthenticationService
+public class AuthenticationService : IAuthenticationService
 {
     private readonly ILogger<AuthenticationService> _logger;
     private readonly IAsyncRepository<Account, long> _accountRepository;
