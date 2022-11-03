@@ -4,6 +4,8 @@ using System.Text;
 using AuthenticationService.Core.Exceptions;
 using AuthenticationService.Core.Services.interfaces;
 using AuthenticationService.Dal.Models;
+using AuthenticationService.Grpc;
+using AuthenticationService.Grpc.Agents.Interfaces;
 using GenericDal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -16,16 +18,19 @@ public class AuthenticationService : IAuthenticationService
 {
     private readonly ILogger<AuthenticationService> _logger;
     private readonly IAsyncRepository<Account, long> _accountRepository;
+    private readonly IAccountAgent _accountAgent;
     private readonly SigningCredentials _signingCredentials;
     private readonly JwtSecurityTokenHandler _tokenHandler;
     
     public AuthenticationService(
         ILogger<AuthenticationService> logger, 
         IAsyncRepository<Account, long> accountRepository,
+        IAccountAgent accountAgent,
         IConfiguration configuration)
     {
         _logger = logger;
         _accountRepository = accountRepository;
+        _accountAgent = accountAgent;  
         _signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(
@@ -74,7 +79,9 @@ public class AuthenticationService : IAuthenticationService
             Password = BC.HashPassword(password)
         };
 
+        await _accountAgent.CreateAccount(new() { Email = email });
         account = await _accountRepository.CreateAsync(account);
+        
         _logger.LogInformation("Account created with Id: {Id}", account.Id);
         return true;
     }

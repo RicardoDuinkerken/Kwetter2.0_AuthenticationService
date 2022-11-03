@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AuthenticationService.Core\AuthenticationService.Core.csproj" />
+      <ProjectReference Include="..\AuthenticationService.Grpc\AuthenticationService.Grpc.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -2,6 +2,8 @@
 using AuthenticationService.Core.Services.interfaces;
 using AuthenticationService.Dal;
 using AuthenticationService.Dal.Models;
+using AuthenticationService.Grpc.Agents;
+using AuthenticationService.Grpc.Agents.Interfaces;
 using GenericDal;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -49,6 +51,9 @@ namespace AuthenticationService.Api
             //services
             services.AddTransient<IAuthenticationService, Core.Services.AuthenticationService>();
 
+            //agents
+            services.AddTransient<IAccountAgent, AccountAgent>();
+            
             //Authentication
             string secret = Configuration.GetSection("AppSettings")["Secret"];
             services.AddAuthentication(configureOptions =>

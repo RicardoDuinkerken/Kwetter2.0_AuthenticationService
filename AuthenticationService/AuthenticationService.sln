@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.Core"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.Dal", "AuthenticationService.Dal\AuthenticationService.Dal.csproj", "{D79E9BE2-4B6D-4C62-8C7D-6819ED5C5D4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService.Grpc", "AuthenticationService.Grpc\AuthenticationService.Grpc.csproj", "{71378748-DDBF-4CA6-B1DA-AC3B51B22FCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{D79E9BE2-4B6D-4C62-8C7D-6819ED5C5D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D79E9BE2-4B6D-4C62-8C7D-6819ED5C5D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D79E9BE2-4B6D-4C62-8C7D-6819ED5C5D4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71378748-DDBF-4CA6-B1DA-AC3B51B22FCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71378748-DDBF-4CA6-B1DA-AC3B51B22FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71378748-DDBF-4CA6-B1DA-AC3B51B22FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71378748-DDBF-4CA6-B1DA-AC3B51B22FCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
