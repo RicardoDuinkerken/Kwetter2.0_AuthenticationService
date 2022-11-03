@@ -78,4 +78,53 @@ public class AuthenticationService : IAuthenticationService
         _logger.LogInformation("Account created with Id: {Id}", account.Id);
         return true;
     }
+    
+    public async Task<bool> DeleteAccount(string email)
+    {
+        List<Account> existingAccounts = await _accountRepository.GetWhereAsync(a => a.Email == email);
+        if (existingAccounts.Count < 0)
+        {
+            //email doesnt exist
+            throw new FailedDeleteAttemptException();
+        }
+
+        bool result = await _accountRepository.DeleteAsync(existingAccounts[0].Id);
+        _logger.LogInformation("Account deleted with Id: {Id}", existingAccounts[0].Id);
+        return result;
+    }
+
+    public async Task<bool> ChangeEmail(string oldEmail, string newEmail)
+    {
+        List<Account> existingAccounts = await _accountRepository.GetWhereAsync(a => a.Email == oldEmail);
+        if (existingAccounts.Count < 0)
+        {
+            //email doesnt exist
+            throw new FailedChangeEmailAttemptExpcetion();
+        }
+
+        existingAccounts[0].Email = newEmail;
+            
+        Account updatedAccount = await _accountRepository.UpdateAsync(existingAccounts[0]);
+        _logger.LogInformation("Account email changed with Id: {Id}", existingAccounts[0].Id);
+
+        if (updatedAccount.Email == newEmail) return true;
+
+        return false;
+    }
+
+    public async Task<bool> ChangePassword(string email, string password)
+    {
+        List<Account> existingAccounts = await _accountRepository.GetWhereAsync(a => a.Email == email);
+        if (existingAccounts.Count < 0)
+        {
+            //email doesnt exist
+            throw new FailedChangePasswordAttemptException();
+        }
+
+        existingAccounts[0].Password = BC.HashPassword(password);
+        Account updatedAccount = await _accountRepository.UpdateAsync(existingAccounts[0]);
+        _logger.LogInformation("Account password changed with Id: {Id}", existingAccounts[0].Id);
+
+        return true;
+    }
 }
