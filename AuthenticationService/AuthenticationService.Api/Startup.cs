@@ -87,7 +87,9 @@ namespace AuthenticationService.Api
                                 "https://kantilever.store",
                                 "https://backoffice.kantilever.store",
                                 "http://localhost:4200",
-                                "http://localhost:4201");
+                                "http://localhost:4201",
+                                "http://localhost:5001",
+                                "https://localhost:5002");
                     });
             });
             services.AddSwaggerGen(c =>
