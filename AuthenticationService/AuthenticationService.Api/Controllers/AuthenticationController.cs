@@ -21,7 +21,7 @@ public class AuthenticationController : ControllerBase
         _logger = logger;
         _authService = authService;
     }
-    
+
     [HttpPost]
     [Route("login")]
     [Consumes(MediaTypeNames.Application.Json)]

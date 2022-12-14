@@ -32,12 +32,20 @@ namespace AuthenticationService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string server = Configuration.GetSection("MySql").GetValue<string>("Server");
-            string username = Configuration.GetSection("Mysql").GetValue<string>("Username");
-            string password = Configuration.GetSection("Mysql").GetValue<string>("Password");
-            string database = Configuration.GetSection("Mysql").GetValue<string>("Database");
-            string connectionString = $"server={server};user={username};password={password};database={database}";
+            // string server = Configuration.GetSection("MySql").GetValue<string>("Server");
+            // string port = Configuration.GetSection("MySql").GetValue<string>("Port");
+            // string username = Configuration.GetSection("Mysql").GetValue<string>("Username");
+            // string password = Configuration.GetSection("Mysql").GetValue<string>("Password");
+            // string database = Configuration.GetSection("Mysql").GetValue<string>("Database");
+
+            string server = Configuration["Server"] ?? "localhost";
+            string port = Configuration["Port"] ?? "3306";
+            string username = Configuration["Username"] ?? "root";
+            string password = Configuration["Password"] ?? "Geheim_101";
+            string database = Configuration["Database"] ?? "Authentication";
             
+                string connectionString = $"server={server};Port={port};user={username};password={password};database={database}";
+                Console.WriteLine(connectionString);
             services.AddDbContext<AuthenticationServiceContext>(builder =>
                 {
                     builder.UseLoggerFactory(new NullLoggerFactory());
@@ -110,7 +118,11 @@ namespace AuthenticationService.Api
             
             context.Database.EnsureCreated();
 
-            app.UseHttpsRedirection();
+            if (!env.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+            
             
             app.UseCors(AllowOriginsKey);
 

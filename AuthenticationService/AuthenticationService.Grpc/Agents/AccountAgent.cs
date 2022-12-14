@@ -12,7 +12,8 @@ public class AccountAgent : IAccountAgent
     
     public AccountAgent(IConfiguration configuration, ILogger<AccountAgent> logger)
     {
-        _address = configuration.GetSection("ServiceUrl")["AccountService"];
+        _address = configuration["AccountService"] ?? "http://localhost:5003";
+        Console.WriteLine(_address);
         _logger = logger;
     }
     
